@@ -1,0 +1,1 @@
+Arrays: This folder contains all the concepts related to array.
