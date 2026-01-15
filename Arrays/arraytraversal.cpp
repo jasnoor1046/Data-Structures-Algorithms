@@ -1,20 +1,55 @@
+/*
+Problem:
+Traverse an array and access each element.
+
+Data Structure:
+Array
+
+Approach:
+Iterate through the array using a single loop and process each element.
+This is the most basic operation on arrays and forms the foundation
+for many other algorithms.
+
+Time Complexity:
+O(n)
+
+Space Complexity:
+O(1)
+
+Edge Cases:
+- Empty array
+- Single element array
+*/
+
 #include <iostream>
 using namespace std;
 
 int main()
 {
-    int arr[] = {10, 20, 30, 40, 50};     // sample array
-    int n = sizeof(arr) / sizeof(arr[0]); // length of array
-    /* sizeof gives the total memory size (in bytes) occupied by the array.
-    Example: if arr has 5 integers and each int takes 4 bytes → sizeof(arr) = 20.
-    */
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
 
-    cout << "Array elements are: ";
-    for (int i = 0; i < n; i++)
+    if (n == 0)
     {
-        cout << arr[i] << " "; // accessing each element
+        cout << "Array is empty." << endl;
+    }
+    else
+    {
+        int arr[n];
+        cout << "Enter " << n << " elements: ";
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+
+        cout << "Array elements are: ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
     }
 
-    cout << endl;
     return 0;
 }

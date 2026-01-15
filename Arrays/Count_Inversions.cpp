@@ -1,20 +1,50 @@
+/*
+Problem:
+Count the number of inversions in an array.
+
+Definition:
+An inversion is a pair (i, j) such that i < j and arr[i] > arr[j].
+
+Pattern:
+Divide and Conquer (Merge Sort based)
+
+Approach:
+Use a modified merge sort to count inversions while merging.
+This reduces the time complexity from O(n²) to O(n log n).
+
+Time Complexity:
+O(n log n).
+- Best Case: O(n log n)
+Even if the array is already sorted, merge sort still divides and merges recursively.
+- Average Case: O(n log n)
+Each level of recursion requires merging, and there are \log n levels.
+- Worst Case: O(n log n)
+Unlike quicksort, merge sort does not degrade to quadratic time.
+Breakdown:
+- Splitting the array: \log n levels of recursion.
+
+
+Space Complexity:
+O(n).Temporary arrays are needed to store left and right halves during merging.
+
+Edge Cases:
+- Already sorted array
+- Reverse sorted array
+- Duplicate elements
+*/
+
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
-
-/* Count inversions in array measures how far it is being sorted, specifically by counting pairs
-of elements in an array specifically where arr[i]>arr[j]. */
 
 int merge(vector<int> &arr, int st, int mid, int end)
 {
     vector<int> temp;
     int i = st, j = mid + 1;
-    int invCount = 0; // initializing the variable for count inversion.
-
+    int invCount = 0;
     while (i <= mid && j <= end)
-    { /*Here we check compare the elements of left side to right side
-if element in the left is smaller then the right it is pushed in the temp vector otherwise
-the element on the right is pushed to the temp vector*/
+    {
         if (arr[i] <= arr[j])
         {
             temp.push_back(arr[i]);
@@ -28,7 +58,7 @@ the element on the right is pushed to the temp vector*/
         }
     }
     while (i <= mid)
-    { // this part will put the remaining elements in the temp vector
+    {
         temp.push_back(arr[i]);
         i++;
     }
@@ -38,11 +68,35 @@ the element on the right is pushed to the temp vector*/
         j++;
     }
     for (int idx = 0; idx < temp.size(); idx++)
-    { /*This part will merge the two sorted parts
-    i.e., left and the right half in a single array.*/
+    {
         arr[idx + st] = temp[idx];
     }
     return invCount;
+}
+bool isSortedAscending(const vector<int> &arr)
+{
+    for (int i = 1; i < arr.size(); i++)
+        if (arr[i] < arr[i - 1])
+            return false;
+    return true;
+}
+
+bool isSortedDescending(const vector<int> &arr)
+{
+    for (int i = 1; i < arr.size(); i++)
+        if (arr[i] > arr[i - 1])
+            return false;
+    return true;
+}
+
+bool hasDuplicates(const vector<int> &arr)
+{
+    vector<int> temp = arr;
+    sort(temp.begin(), temp.end());
+    for (int i = 1; i < temp.size(); i++)
+        if (temp[i] == temp[i - 1])
+            return true;
+    return false;
 }
 
 int mergeSort(vector<int> &arr, int st, int end)
